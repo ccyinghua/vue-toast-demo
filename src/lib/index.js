@@ -32,6 +32,8 @@ Toast.install = function(Vue,options){   // 必须定义一个install方法，�
         instance.message = message;
         instance.visible = true;
 
+        document.body.appendChild(instance.$el);
+
         setTimeout(()=>{
             instance.visible = false;
             document.body.removeChild(instance.$el);
@@ -50,6 +52,10 @@ Toast.install = function(Vue,options){   // 必须定义一个install方法，�
     Vue.prototype.$toast['error'] = function(message,option){
          Vue.prototype.$toast(message,option);
     }
+}
+
+if(window.Vue){
+    Vue.use(Toast);
 }
 
 // 导出

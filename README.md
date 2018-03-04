@@ -332,7 +332,7 @@ cnpm install vue --save  // 安装vue
 ```
 执行打包命令后运行index.html
 
-![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/5.jpg)<br>
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/6.jpg) <br>
 
 未完待续.....
 

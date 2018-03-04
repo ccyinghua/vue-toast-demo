@@ -5,14 +5,15 @@ webpack官网：[https://webpack.js.org/](https://webpack.js.org/)
 
 ```javascript
 |-- readme文件夹 --// 放置README.md说明文件的图片，项目中可删除的
+    |-- index.html --// 静态文件备份
 |-- src
     |-- lib
         |-- index.js  --// 入口文件
         |-- vue-toast.vue
-    |-- index.html  --// 静态文件
+    |-- index.html  -- // 静态文件
 |-- .babelrc
 |-- package.json
-|-- webpack.config.js
+|-- webpack.config.js --// 配置文件
 ```
 
 ### 一、新建vue-toast-demo文件夹
@@ -105,11 +106,14 @@ Toast.install = function(Vue,options){   // 必须定义一个install方法，�
 
     // 在vue的原型上面拓展一个$toast函数
     Vue.prototype.$toast = function(message,option){
-        // 配置覆盖
+        let callback = '';
+        // 配置覆盖,设置局部配置
         if(typeof option == 'object'){
             for(var key in option){
                 opt[key] = option[key];
             }
+        }else if(typeof option == 'function'){
+            callback = option;
         }
 
         // 用Vue.extend()继承ToastComponent组件，构成一个ToastController实例
@@ -126,26 +130,41 @@ Toast.install = function(Vue,options){   // 必须定义一个install方法，�
 
         setTimeout(()=>{
             instance.visible = false;
-            document.body.removeChild(instance.$el);
+            setTimeout(()=>{
+                document.body.removeChild(instance.$el);
+                callback && callback();
+            },500)
         }, opt.duration)
-    }
+    };
 
-    Vue.prototype.$toast['show'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
-    Vue.prototype.$toast['success'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
-    Vue.prototype.$toast['info'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
-    Vue.prototype.$toast['error'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
+    // Vue.prototype.$toast['show'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+    // Vue.prototype.$toast['success'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+    // Vue.prototype.$toast['info'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+    // Vue.prototype.$toast['error'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+
+    // 简化上面代码
+    ['show','success','info','error'].forEach(function(type){
+        Vue.prototype.$toast[type] = function(message,option){
+            return Vue.prototype.$toast(message,option);
+        }
+    });
+
 }
 
-if(window.Vue){
-    Vue.use(Toast);
+// if(window.Vue){
+//     Vue.use(Toast);
+// }
+
+if(typeof window !== 'undefined' && window.Vue){
+    window.Vue.use(Toast);
 }
 
 // 导出
@@ -202,7 +221,7 @@ module.exports = {
 };
 ```
 
-> ##### 打包
+> ##### 打包命令
 
 ```javascript
 webpack  // 如果文件不叫webpack.config.js   webpack --config ...
@@ -259,7 +278,7 @@ module.exports = {
 
     // js文件的合并，HTML的生成，插件等等
     plugins:[
-
+        ......
     ]
 };
 
@@ -272,26 +291,46 @@ cnpm install vue --save  // 安装vue
 ```
 
 
-```
+```html
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
 <script type="text/javascript" src="../dist/vue-toast-demo.js"></script>
 
-<div id="app">
-    <a href="javascript:;" @click="toast">点击弹出Toast</a>
+<div id="app" class="text-center">
+    <h2>vue-toast for mibile</h2>
+    <div class="form-group row">
+        <a class="btn btn-primary" href="javascript:;" @click="toast">默认toast</a>
+    </div>
+    <div class="form-group row">
+        <a class="btn btn-info" href="javascript:;" @click="toast2">5秒后关闭toast</a>
+    </div>
+    <div class="form-group row">
+        <a class="btn btn-success" href="javascript:;" @click="toast3">关闭toast后，执行回调</a>
+    </div>
 </div>
 <script type="text/javascript">
     new Vue({
         el:"#app",
         methods:{
             toast:function(){
-                this.$toast.show("您好，toast!")
+                this.$toast.show("当前点击了标签");
+            },
+            toast2:function(){
+                this.$toast.show("当前点击了标签",{
+                    duration:5000
+                });
+            },
+            toast3:function(){
+                this.$toast.show("当前点击了标签",function(){
+                    alert("这里是回掉函数")
+                });
             }
         }
     })
 </script>
 
 ```
-打包命令后运行index.html
+执行打包命令后运行index.html
 
 ![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/5.jpg)<br>
 

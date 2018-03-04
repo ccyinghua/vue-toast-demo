@@ -5,19 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="../node_modules/vue/dist/vue.js"></script>
     <script type="text/javascript" src="../dist/vue-toast-demo.js"></script>
 </head>
 <body>
-<div id="app">
-    <a href="javascript:;" @click="toast">点击弹出Toast</a>
+<div id="app" class="text-center">
+    <h2>vue-toast for mibile</h2>
+    <div class="form-group row">
+        <a class="btn btn-primary" href="javascript:;" @click="toast">默认toast</a>
+    </div>
+    <div class="form-group row">
+        <a class="btn btn-info" href="javascript:;" @click="toast2">5秒后关闭toast</a>
+    </div>
+    <div class="form-group row">
+        <a class="btn btn-success" href="javascript:;" @click="toast3">关闭toast后，执行回调</a>
+    </div>
 </div>
 <script type="text/javascript">
     new Vue({
         el:"#app",
         methods:{
             toast:function(){
-                this.$toast.show("您好，toast!")
+                this.$toast.show("当前点击了标签");
+            },
+            toast2:function(){
+                this.$toast.show("当前点击了标签",{
+                    duration:5000
+                });
+            },
+            toast3:function(){
+                this.$toast.show("当前点击了标签",function(){
+                    alert("这里是回掉函数")
+                });
             }
         }
     })

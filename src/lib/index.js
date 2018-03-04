@@ -15,11 +15,14 @@ Toast.install = function(Vue,options){   // 必须定义一个install方法，�
 
     // 在vue的原型上面拓展一个$toast函数
     Vue.prototype.$toast = function(message,option){
-        // 配置覆盖
+        let callback = '';
+        // 配置覆盖,设置局部配置
         if(typeof option == 'object'){
             for(var key in option){
                 opt[key] = option[key];
             }
+        }else if(typeof option == 'function'){
+            callback = option;
         }
 
         // 用Vue.extend()继承ToastComponent组件，构成一个ToastController实例
@@ -36,26 +39,41 @@ Toast.install = function(Vue,options){   // 必须定义一个install方法，�
 
         setTimeout(()=>{
             instance.visible = false;
-            document.body.removeChild(instance.$el);
+            setTimeout(()=>{
+                document.body.removeChild(instance.$el);
+                callback && callback();
+            },500)
         }, opt.duration)
-    }
+    };
 
-    Vue.prototype.$toast['show'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
-    Vue.prototype.$toast['success'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
-    Vue.prototype.$toast['info'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
-    Vue.prototype.$toast['error'] = function(message,option){
-         Vue.prototype.$toast(message,option);
-    }
+    // Vue.prototype.$toast['show'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+    // Vue.prototype.$toast['success'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+    // Vue.prototype.$toast['info'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+    // Vue.prototype.$toast['error'] = function(message,option){
+    //      Vue.prototype.$toast(message,option);
+    // }
+
+    // 简化上面代码
+    ['show','success','info','error'].forEach(function(type){
+        Vue.prototype.$toast[type] = function(message,option){
+            return Vue.prototype.$toast(message,option);
+        }
+    });
+
 }
 
-if(window.Vue){
-    Vue.use(Toast);
+// if(window.Vue){
+//     Vue.use(Toast);
+// }
+
+if(typeof window !== 'undefined' && window.Vue){
+    window.Vue.use(Toast);
 }
 
 // 导出

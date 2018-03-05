@@ -247,7 +247,7 @@ module.exports = {
 > ##### 打包命令
 
 ```javascript
-webpack  // 如果文件不叫webpack.config.js   webpack --config ...
+webpack  // 如果文件不叫webpack.config.js 可以使用--config参数传入路径 例：webpack --config ./webpackConfig/dev.config.js
 
 ```
 如果成功会生成dist/vue-toast-demo.js文件，如果报错根据报错提示安装缺少的插件等<br>

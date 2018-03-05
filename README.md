@@ -4,7 +4,7 @@
 
 
 ```javascript
-import VueToast  from 'vue-toast-m'
+import VueToast  from 'vue-toast-demo-cc'
  
 Vue.use(VueToast)
  
@@ -251,9 +251,9 @@ webpack  // 如果文件不叫webpack.config.js 可以使用--config参数传入
 
 ```
 如果成功会生成dist/vue-toast-demo.js文件，如果报错根据报错提示安装缺少的插件等<br>
-![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/3.jpg)<br>
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/3.jpg?raw=true)<br>
 比如上图就是缺少`vue-template-compiler`插件，安装一下就行<br>
-![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/4.jpg)<br>
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/4.jpg?raw=true)<br>
 上图是缺少处理css样式的，`vue-toast.vue`是用sass处理样式<br>
 安装sass
 ```javascript
@@ -353,7 +353,7 @@ cnpm install vue --save  // 安装vue
 ```
 执行webpack打包命令后运行index.html
 
-![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/6.jpg) <br>
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/6.jpg?raw=true) <br>
 
 
 ### 五、npm插件发布
@@ -370,10 +370,10 @@ npm publish  // 发布
 ```
 package.json中name是插件的名字，首先要在npm搜索一下是不是有同名字的插件，如果有是不能以这个名字发布的；version是插件版本，如果改动了项目，需要修改一下版本号再进行`npm publish`发布。
 
-![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/7.jpg)
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/7.jpg?raw=true)
 
 因为插件名字在npm已经有了，所以把name改为vue-toast-demo-cc再发布。
 发布成功：[https://www.npmjs.com/package/vue-toast-demo-cc](https://www.npmjs.com/package/vue-toast-demo-cc)
 
-![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/8.jpg)
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/8.jpg?raw=true)
 

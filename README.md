@@ -1,5 +1,28 @@
 ## 实现npm插件vue-toast-m实例练习
 
+> #### 使用
+
+
+```javascript
+import VueToast  from 'vue-toast-m'
+ 
+Vue.use(VueToast)
+ 
+ 
+this.$toast.show("hello,toast")
+//or
+this.$toast.show("hello,toast",{
+  duration:3000
+})
+// or
+this.$toast.show("hello,toast",function(){
+    //to-do  
+})
+
+```
+
+> #### 项目结构
+
 npm插件原地址： [https://www.npmjs.com/package/vue-toast-m](https://www.npmjs.com/package/vue-toast-m) <br>
 webpack官网：[https://webpack.js.org/](https://webpack.js.org/)
 
@@ -283,13 +306,11 @@ module.exports = {
 };
 
 ```
-> ##### src/index.html修改
+> ##### src/index.html修改使用
 
-
-```
+```javascript
 cnpm install vue --save  // 安装vue
 ```
-
 
 ```html
 <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -330,23 +351,29 @@ cnpm install vue --save  // 安装vue
 </script>
 
 ```
-执行打包命令后运行index.html
+执行webpack打包命令后运行index.html
 
 ![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/6.jpg) <br>
 
-未完待续.....
 
+### 五、npm插件发布
 
+npm官网：[https://www.npmjs.com/](https://www.npmjs.com/)注册自己的用户，记住注册时的用户名密码。接下来就可以执行命令。
 
+```
+npm adduser   // 添加用户：输入用户名密码和邮箱
 
+npm whoami  // 验证当前用户是谁，验证是不是之前添加的用户
 
+npm publish  // 发布
 
+```
+package.json中name是插件的名字，首先要在npm搜索一下是不是有同名字的插件，如果有是不能以这个名字发布的；version是插件版本，如果改动了项目，需要修改一下版本号再进行`npm publish`发布。
 
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/7.jpg)
 
+因为插件名字在npm已经有了，所以把name改为vue-toast-demo-cc再发布。
+发布成功：[https://www.npmjs.com/package/vue-toast-demo-cc](https://www.npmjs.com/package/vue-toast-demo-cc)
 
-
-
-
-
-
+![image](https://github.com/ccyinghua/vue-toast-demo/blob/master/readme/8.jpg)
 
